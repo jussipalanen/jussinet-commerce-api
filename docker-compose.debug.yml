@@ -1,8 +1,8 @@
 version: '3.4'
 
 services:
-  testproject:
-    image: testproject
+  jussinet-web-commerce-api:
+    image: jussinet-web-commerce-api
     build:
       context: .
       dockerfile: ./Dockerfile
