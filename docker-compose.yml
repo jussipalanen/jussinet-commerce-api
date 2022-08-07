@@ -1,0 +1,50 @@
+version: '3.4'
+services:
+  php:
+    build: './php/'
+    networks:
+      - backend
+    volumes:
+      - ./src/:/var/www/html/
+    depends_on:
+      - mariadb
+  apache:
+    build: './apache/'
+    networks:
+      - frontend
+      - backend
+    ports:
+      - "80:80"
+    volumes:
+      - ./src/:/var/www/html/
+    depends_on:
+      - php
+      - mariadb
+  mariadb:
+    image: mariadb
+    container_name: mariadb
+    restart: always
+    volumes:
+      - mariadb-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: pma
+    restart: always
+    links:
+      - mariadb
+    ports:
+      - 8081:80
+    environment:
+      - PMA_HOST=mariadb
+      - PMA_USERNAME=root
+      - PMA_PASSWORD=1234
+      - PMA_ARBITRARY=1
+    depends_on:
+      - mariadb
+volumes:
+  mariadb-data:
+networks:
+  frontend:
+  backend:

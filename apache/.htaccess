@@ -1,0 +1,5 @@
+RewriteEngine On
+RewriteBase /    
+
+RewriteRule ^index\.php$ - [L,NC]
+RewriteRule \.(php|html?|xml)$ index.php [NC,L]

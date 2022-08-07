@@ -1,0 +1,27 @@
+#!/bin/bash
+
+buildImages() {
+    echo "Building images"
+    docker-compose build
+}
+
+start() {
+    echo "Starting server"
+    docker-compose up
+}
+
+stop() {
+    echo "Stopping server"
+    docker-compose down
+}
+
+COMMAND="$1"
+if [ $COMMAND ]; then 
+    if [ $COMMAND = "start" ]; then
+        start
+    elif [ $COMMAND = "stop" ]; then
+        stop
+    elif [ $COMMAND = "build" ]; then
+        buildImages
+    fi
+fi
